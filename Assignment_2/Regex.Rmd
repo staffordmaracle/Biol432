@@ -1,0 +1,22 @@
+---
+title: "Regex.Rmd"
+author: "Stafford"
+date: "28/01/2020"
+output: html_document
+---
+# Changing Species Names
+
+```{r setup, include=TRUE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(dplyr)
+MyData <-read.csv("measurements.csv")
+
+```
+
+## Code for name subsitution
+
+``` {r MyData rename}
+MyData$Sp <- gsub("(\\w)\\w+ ","\\1.", MyData$Species)
+MyData <- select(MyData, Sp, Limb.Width, UnitsW, Limb.Length, UnitsL)
+```
