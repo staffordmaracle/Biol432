@@ -7,13 +7,15 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(knitr)
 Sequences <- read.csv("Sequences.csv")
 ```
 
 # Anaylsis of Sequences of the 16S gene of B. Burgdorferi
 
 ```{r sequences broken down}
-str(Sequences)
+
+nucleotides <- c("A","C","T","G")
 
 seq1 <- as.character(Sequences$Sequence[1])
 seq1A <- gsub("C|T|G", "", seq1)
@@ -25,7 +27,7 @@ seq1T <- gsub("C|A|G", "", seq1)
 seq1G <- gsub("C|T|A", "", seq1)
   seq1G <- nchar(seq1G, type = "chars")
 
-seq1.breakdown <- c(seq1A,seq1C,seq1G,seq1T)  
+sequence_one <- c(seq1A,seq1C,seq1G,seq1T)  
 
 
 seq2 <- as.character(Sequences$Sequence[2])
@@ -38,7 +40,7 @@ seq2T <- gsub("C|A|G", "", seq2)
 seq2G <- gsub("C|T|A", "", seq2)
   seq2G <- nchar(seq2G, type = "chars")
 
-seq2.breakdown <- c(seq2A,seq2C,seq2G,seq2T)  
+sequence_two <- c(seq2A,seq2C,seq2G,seq2T)  
 
 
 seq3 <- as.character(Sequences$Sequence[3])
@@ -51,17 +53,38 @@ seq3T <- gsub("C|A|G", "", seq3)
 seq3G <- gsub("C|T|A", "", seq3)
   seq3G <- nchar(seq3G, type = "chars")
 
-seq3.breakdown <- c(seq3A,seq3C,seq3G,seq3T)
+sequence_three <- c(seq3A,seq3C,seq3G,seq3T)
+
+seq.nucleotides <- data.frame(row.names = nucleotides, sequence_one, sequence_two, sequence_three)
 ```
 
-```{r sequence one in full}
+### Sequence HQ433694.1
+
+```{r sequence one in full, echo=FALSE}
 print(seq1)
 ```
 
-```{r sequence two in full}
+### Sequence HQ433692.1
+
+```{r sequence two in full, echo=FALSE}
 print(seq2)
 ```
 
-```{r sequence three in full}
+### Sequence HQ433691.1
+
+```{r sequence three in full, echo=FALSE}
 print(seq3)
 ```
+
+## Sequence nucleotide concentrations
+
+```{r nucleotide numbers for each sequences}
+kable(seq.nucleotides)
+```
+
+```{bacteria image}
+
+```
+
+```{r GC concentration}
+

@@ -19,4 +19,4 @@ seq <- gsub("\n","", seq)
 Sequences<-data.frame(Name=header,Sequence=seq)
 
 
-write.csv(Sequences, file = "Sequences")
+write.csv(Sequences, file = "Sequences.csv")
