@@ -1,0 +1,67 @@
+---
+title: "Analysis"
+author: "Stafford"
+date: "04/02/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+Sequences <- read.csv("Sequences.csv")
+```
+
+# Anaylsis of Sequences of the 16S gene of B. Burgdorferi
+
+```{r sequences broken down}
+str(Sequences)
+
+seq1 <- as.character(Sequences$Sequence[1])
+seq1A <- gsub("C|T|G", "", seq1)
+  seq1A <- nchar(seq1A, type = "chars")
+seq1C <- gsub("A|T|G", "", seq1)
+  seq1C <- nchar(seq1C, type = "chars")
+seq1T <- gsub("C|A|G", "", seq1)
+  seq1T <- nchar(seq1T, type = "chars")
+seq1G <- gsub("C|T|A", "", seq1)
+  seq1G <- nchar(seq1G, type = "chars")
+
+seq1.breakdown <- c(seq1A,seq1C,seq1G,seq1T)  
+
+
+seq2 <- as.character(Sequences$Sequence[2])
+seq2A <- gsub("C|T|G", "", seq2)
+  seq2A <- nchar(seq2A, type = "chars")
+seq2C <- gsub("A|T|G", "", seq2)
+  seq2C <- nchar(seq2C, type = "chars")
+seq2T <- gsub("C|A|G", "", seq2)
+  seq2T <- nchar(seq2T, type = "chars")
+seq2G <- gsub("C|T|A", "", seq2)
+  seq2G <- nchar(seq2G, type = "chars")
+
+seq2.breakdown <- c(seq2A,seq2C,seq2G,seq2T)  
+
+
+seq3 <- as.character(Sequences$Sequence[3])
+seq3A <- gsub("C|T|G", "", seq3)
+  seq3A <- nchar(seq3A, type = "chars")
+seq3C <- gsub("A|T|G", "", seq3)
+  seq3C <- nchar(seq3C, type = "chars")
+seq3T <- gsub("C|A|G", "", seq3)
+  seq3T <- nchar(seq3T, type = "chars")
+seq3G <- gsub("C|T|A", "", seq3)
+  seq3G <- nchar(seq3G, type = "chars")
+
+seq3.breakdown <- c(seq3A,seq3C,seq3G,seq3T)
+```
+
+```{r sequence one in full}
+print(seq1)
+```
+
+```{r sequence two in full}
+print(seq2)
+```
+
+```{r sequence three in full}
+print(seq3)
+```
