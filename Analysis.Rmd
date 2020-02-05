@@ -85,9 +85,8 @@ kable(seq.nucleotides,
       caption = "Amount of each nucleotide (ACTG) found in each of the three sequences for B. Burgdorferi")
 ```
 
-```{bacteria image}
-![linked jpeg file](Biol432/bburg.jpg)
-```
+
+![B. Burgdorferi image](./bburg.jpg)
 
 
 ## GC Concentrations
