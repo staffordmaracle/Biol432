@@ -11,11 +11,11 @@ library(knitr)
 Sequences <- read.csv("Sequences.csv")
 ```
 
-# Anaylsis of Sequences of the 16S gene of B. Burgdorferi
+# Anaylsis of the 16S gene sequence of B. Burgdorferi
 
-```{r sequences broken down}
+```{r sequence_breakdown}
 
-nucleotides <- c("A","C","T","G")
+Nucleotide <- c("A","C","T","G")
 
 seq1 <- as.character(Sequences$Sequence[1])
 seq1A <- gsub("C|T|G", "", seq1)
@@ -27,7 +27,7 @@ seq1T <- gsub("C|A|G", "", seq1)
 seq1G <- gsub("C|T|A", "", seq1)
   seq1G <- nchar(seq1G, type = "chars")
 
-sequence_one <- c(seq1A,seq1C,seq1G,seq1T)  
+HQ433692.1 <- c(seq1A,seq1C,seq1G,seq1T)  
 
 
 seq2 <- as.character(Sequences$Sequence[2])
@@ -40,7 +40,7 @@ seq2T <- gsub("C|A|G", "", seq2)
 seq2G <- gsub("C|T|A", "", seq2)
   seq2G <- nchar(seq2G, type = "chars")
 
-sequence_two <- c(seq2A,seq2C,seq2G,seq2T)  
+HQ433694.1 <- c(seq2A,seq2C,seq2G,seq2T)  
 
 
 seq3 <- as.character(Sequences$Sequence[3])
@@ -53,38 +53,52 @@ seq3T <- gsub("C|A|G", "", seq3)
 seq3G <- gsub("C|T|A", "", seq3)
   seq3G <- nchar(seq3G, type = "chars")
 
-sequence_three <- c(seq3A,seq3C,seq3G,seq3T)
+HQ433691.1 <- c(seq3A,seq3C,seq3G,seq3T)
 
-seq.nucleotides <- data.frame(row.names = nucleotides, sequence_one, sequence_two, sequence_three)
-```
-
-### Sequence HQ433694.1
-
-```{r sequence one in full, echo=FALSE}
-print(seq1)
+seq.nucleotides <- data.frame(Nucleotide,HQ433694.1, HQ433692.1, HQ433691.1)
 ```
 
 ### Sequence HQ433692.1
 
-```{r sequence two in full, echo=FALSE}
+```{r sequence_1, echo=FALSE}
+print(seq1)
+```
+
+### Sequence HQ433694.1
+
+```{r sequence_2, echo=FALSE}
 print(seq2)
 ```
 
 ### Sequence HQ433691.1
 
-```{r sequence three in full, echo=FALSE}
+```{r sequence_3, echo=FALSE}
 print(seq3)
 ```
 
+
 ## Sequence nucleotide concentrations
 
-```{r nucleotide numbers for each sequences}
-kable(seq.nucleotides)
+```{r nucleotide_numbers}
+kable(seq.nucleotides, 
+      align = 'l',
+      caption = "Amount of each nucleotide (ACTG) found in each of the three sequences for B. Burgdorferi")
 ```
 
 ```{bacteria image}
-
+![linked jpeg file](Biol432/bburg.jpg)
 ```
 
-```{r GC concentration}
 
+## GC Concentrations
+
+```{r GC concentration}
+GCcon1 <- (seq1C+seq1G)/(seq1C+seq1G+seq1A+seq1T)
+GCcon2 <- (seq2C+seq2G)/(seq2C+seq2G+seq2A+seq2T)
+GCcon3 <- (seq3C+seq3G)/(seq3C+seq3G+seq3A+seq3T)
+GC_Content <- c(GCcon1, GCcon2, GCcon3)
+GC_Content <- sprintf("%1.2f%%", 100*GC_Content)
+Sequence_IDs <- c("HQ433694.1","HQ433692.1","HQ433691.1")
+conc <- data.frame(Sequence_IDs,GC_Content)
+kable(conc, align = 'l',
+      caption = "Concentration (%) of G and C nucleotides in each of the three sequences found for B. Burgdorferi")
