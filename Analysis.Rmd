@@ -15,9 +15,9 @@ Sequences <- read.csv("Sequences.csv")
 
 ```{r sequence_breakdown}
 
-Nucleotide <- c("A","C","T","G")
 
 seq1 <- as.character(Sequences$Sequence[1])
+
 seq1A <- gsub("C|T|G", "", seq1)
   seq1A <- nchar(seq1A, type = "chars")
 seq1C <- gsub("A|T|G", "", seq1)
@@ -31,6 +31,7 @@ HQ433692.1 <- c(seq1A,seq1C,seq1G,seq1T)
 
 
 seq2 <- as.character(Sequences$Sequence[2])
+
 seq2A <- gsub("C|T|G", "", seq2)
   seq2A <- nchar(seq2A, type = "chars")
 seq2C <- gsub("A|T|G", "", seq2)
@@ -44,6 +45,7 @@ HQ433694.1 <- c(seq2A,seq2C,seq2G,seq2T)
 
 
 seq3 <- as.character(Sequences$Sequence[3])
+
 seq3A <- gsub("C|T|G", "", seq3)
   seq3A <- nchar(seq3A, type = "chars")
 seq3C <- gsub("A|T|G", "", seq3)
@@ -55,7 +57,6 @@ seq3G <- gsub("C|T|A", "", seq3)
 
 HQ433691.1 <- c(seq3A,seq3C,seq3G,seq3T)
 
-seq.nucleotides <- data.frame(Nucleotide,HQ433694.1, HQ433692.1, HQ433691.1)
 ```
 
 
@@ -81,6 +82,10 @@ print(seq3)
 ## Sequence nucleotide concentrations
 
 ```{r nucleotide_numbers}
+Nucleotide <- c("A","C","T","G")
+
+seq.nucleotides <- data.frame(Nucleotide,HQ433694.1, HQ433692.1, HQ433691.1)
+
 kable(seq.nucleotides, 
       align = 'l',
       caption = "Amount of each nucleotide (ACTG) found in each of the three sequences for B. Burgdorferi")
@@ -103,3 +108,25 @@ Sequence_IDs <- c("HQ433694.1","HQ433692.1","HQ433691.1")
 conc <- data.frame(Sequence_IDs,GC_Content)
 kable(conc, align = 'l',
       caption = "Concentration (%) of G and C nucleotides in each of the three sequences found for B. Burgdorferi")
+```
+
+
+# Part II 
+
+```{r GC_Content, fig.cap= "Figure 1. Percentage of G and C Nucleotides (%GC) found in species A (Green), B (Red), and C (Blue). Points depict individual sequences as an integer connected to each Sequnece ID (Sequence #)"}
+
+library(dplyr)
+library(ggplot2)
+
+GC_Content <- read.csv("GC_content.csv")
+GC_Content <- mutate(GC_Content, GC = C + G)
+GC_Content <- select(GC_Content, ID, Species, GC)
+
+GC_Content$Sequence <- c(1:1000)
+p1 <- qplot(GC, Sequence, data = GC_Content, 
+      geom = c("point"),
+      colour = Species,
+      xlab = "% GC",
+      ylab = "Sequence #",
+      main = "GC Nucleotide Prcentage for Each Sequence")
+p1 + scale_color_brewer(palette = "Dark2")
