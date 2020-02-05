@@ -84,7 +84,7 @@ print(seq3)
 ```{r nucleotide_numbers}
 Nucleotide <- c("A","C","T","G")
 
-seq.nucleotides <- data.frame(Nucleotide,HQ433694.1, HQ433692.1, HQ433691.1)
+seq.nucleotides <- data.frame(Nucleotide,HQ433692.1, HQ433694.1, HQ433691.1)
 
 kable(seq.nucleotides, 
       align = 'l',
@@ -104,7 +104,7 @@ GCcon2 <- (seq2C+seq2G)/(seq2C+seq2G+seq2A+seq2T)
 GCcon3 <- (seq3C+seq3G)/(seq3C+seq3G+seq3A+seq3T)
 GC_Content <- c(GCcon1, GCcon2, GCcon3)
 GC_Content <- sprintf("%1.2f%%", 100*GC_Content)
-Sequence_IDs <- c("HQ433694.1","HQ433692.1","HQ433691.1")
+Sequence_IDs <- c("HQ433692.1","HQ433694.1","HQ433691.1")
 conc <- data.frame(Sequence_IDs,GC_Content)
 kable(conc, align = 'l',
       caption = "Concentration (%) of G and C nucleotides in each of the three sequences found for B. Burgdorferi")

@@ -428,7 +428,7 @@ HQ433691.1 &lt;- c(seq3A,seq3C,seq3G,seq3T)</code></pre>
 <h2>Sequence nucleotide concentrations</h2>
 <pre class="r"><code>Nucleotide &lt;- c(&quot;A&quot;,&quot;C&quot;,&quot;T&quot;,&quot;G&quot;)
 
-seq.nucleotides &lt;- data.frame(Nucleotide,HQ433694.1, HQ433692.1, HQ433691.1)
+seq.nucleotides &lt;- data.frame(Nucleotide,HQ433692.1, HQ433694.1, HQ433691.1)
 
 kable(seq.nucleotides, 
       align = &#39;l&#39;,
@@ -438,22 +438,22 @@ kable(seq.nucleotides,
 <thead>
 <tr class="header">
 <th align="left">Nucleotide</th>
-<th align="left">HQ433694.1</th>
 <th align="left">HQ433692.1</th>
+<th align="left">HQ433694.1</th>
 <th align="left">HQ433691.1</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td align="left">A</td>
-<td align="left">155</td>
 <td align="left">154</td>
+<td align="left">155</td>
 <td align="left">154</td>
 </tr>
 <tr class="even">
 <td align="left">C</td>
-<td align="left">81</td>
 <td align="left">82</td>
+<td align="left">81</td>
 <td align="left">81</td>
 </tr>
 <tr class="odd">
@@ -482,7 +482,7 @@ GCcon2 &lt;- (seq2C+seq2G)/(seq2C+seq2G+seq2A+seq2T)
 GCcon3 &lt;- (seq3C+seq3G)/(seq3C+seq3G+seq3A+seq3T)
 GC_Content &lt;- c(GCcon1, GCcon2, GCcon3)
 GC_Content &lt;- sprintf(&quot;%1.2f%%&quot;, 100*GC_Content)
-Sequence_IDs &lt;- c(&quot;HQ433694.1&quot;,&quot;HQ433692.1&quot;,&quot;HQ433691.1&quot;)
+Sequence_IDs &lt;- c(&quot;HQ433692.1&quot;,&quot;HQ433694.1&quot;,&quot;HQ433691.1&quot;)
 conc &lt;- data.frame(Sequence_IDs,GC_Content)
 kable(conc, align = &#39;l&#39;,
       caption = &quot;Concentration (%) of G and C nucleotides in each of the three sequences found for B. Burgdorferi&quot;)</code></pre>
@@ -496,11 +496,11 @@ kable(conc, align = &#39;l&#39;,
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">HQ433694.1</td>
+<td align="left">HQ433692.1</td>
 <td align="left">44.28%</td>
 </tr>
 <tr class="even">
-<td align="left">HQ433692.1</td>
+<td align="left">HQ433694.1</td>
 <td align="left">44.07%</td>
 </tr>
 <tr class="odd">
