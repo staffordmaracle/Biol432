@@ -58,6 +58,7 @@ HQ433691.1 <- c(seq3A,seq3C,seq3G,seq3T)
 seq.nucleotides <- data.frame(Nucleotide,HQ433694.1, HQ433692.1, HQ433691.1)
 ```
 
+
 ### Sequence HQ433692.1
 
 ```{r sequence_1, echo=FALSE}
@@ -84,6 +85,7 @@ kable(seq.nucleotides,
       align = 'l',
       caption = "Amount of each nucleotide (ACTG) found in each of the three sequences for B. Burgdorferi")
 ```
+
 
 
 ![B. Burgdorferi image](./bburg.jpg)
