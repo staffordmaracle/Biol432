@@ -1,0 +1,89 @@
+---
+title: "Clinical Sequence Analysis"
+author: "Stafford"
+date: "11/02/2020"
+output: html_document
+---
+#Unknown Sequence Analysis
+
+unknown sequence "Seq" sampled from patient X biofluids was found to be a possible match with the genome of the newly discovered Coronavirus (2019-nCoV), sequence matched with Severe acute respiratory syndrome coronavirus 2
+
+Here is a [link](https://www.who.int/emergencies/diseases/novel-coronavirus-2019/technical-guidance/patient-management) to WHO's technical guide for patient management.
+
+```{r setup, include=TRUE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(BiocManager)
+library(genbankr)
+library(rentrez)
+library(annotate)
+library(ggtree)
+library(ape)
+library(muscle)
+library(reshape2)
+```
+
+Unknown Sequence - Patient X
+```{r sequence_input}
+Seq <- c("ATGTCTGATAATGGACCCCAAAATCAGCGAAATGCACCCCGCATTACGTTTGGTGGACCCTCAGATTCAA
+CTGGCAGTAACCAGAATGGAGAACGCAGTGGGGCGCGATCAAAACAACGTCGGCCCCAAGGTTTACCCAA
+TAATACTGCGTCTTGGTTCACCGCTCTCACTCAACATGGCAAGGAAGACCTTAAATTCCCTCGAGGACAA
+GGCGTTCCAATTAACACCAATAGCAGTCCAGATGACCAAATTGGCTACTACCGAAGAGCTACCAGACGAA
+TTCGTGGTGGTGACGGTAAAATGAAAGATCTCAGTCCAAGATGGTATTTCTACTACCTAGGAACTGGGCC
+AGAAGCTGGACTTCCCTATGGTGCTAACAAAGACGGCATCATATGGGTTGCAACTGAGGGAGCCTTGAAT
+ACACCAAAAGATCACATTGGCACCCGCAATCCTGCTAACAATGCTGCAATCGTGCTACAACTTCCTCAAG
+GAACAACATTGCCAAAAGGCTTCTACGCAGAAGGGAGCAGAGGCGGCAGTCAAGCCTCTTCTCGTTCCTC
+ATCACGTAGTCGCAACAGTTCAAGAAATTCAACTCCAGGCAGCAGTAGGGGAACTTCTCCTGCTAGAATG
+GCTGGCAATGGCGGTGATGCTGCTCTTGCTTTGCTGCTGCTTGACAGATTGAACCAGCTTGAGAGCAAAA
+TGTCTGGTAAAGGCCAACAACAACAAGGCCAAACTGTCACTAAGAAATCTGCTGCTGAGGCTTCTAAGAA
+GCCTCGGCAAAAACGTACTGCCACTAAAGCATACAATGTAACACAAGCTTTCGGCAGACGTGGTCCAGAA
+CAAACCCAAGGAAATTTTGGGGACCAGGAACTAATCAGACAAGGAACTGATTACAAACATTGGCCGCAAA
+TTGCACAATTTGCCCCCAGCGCTTCAGCGTTCTTCGGAATGTCGCGCATTGGCATGGAAGTCACACCTTC
+GGGAACGTGGTTGACCTACACAGGTGCCATCAAATTGGATGACAAAGATCCAAATTTCAAAGATCAAGTC
+ATTTTGCTGAATAAGCATATTGACGCATACAAAACATTCCCACCAACAGAGCCTAAAAAGGACAAAAAGA
+AGAAGGCTGATGAAACTCAAGCCTTACCGCAGAGACAGAAGAAACAGCAAACTGTGACTCTTCTTCCTGC
+TGCAGATTTGGATGATTTCTCCAAACAATTGCAACAATCCATGAGCAGTGCTGACTCAACTCAGGCCTAA")
+```
+
+
+```{r genbank_retrival}
+HsBLAST<-blastSequences(paste(Seq),as = 'data.frame',
+                           hitListSize = 20, timeout = 400)
+
+HsHitsDF<-data.frame(ID=HsBLAST$Hit_accession,Seq=HsBLAST$Hsp_hseq, stringsAsFactors = FALSE)
+```
+
+## Species Hits
+
+The following are the species for which the unknown sequence was found in.
+
+```{r analysis}
+HsHitsDNA<-sapply(HsHitsDF$Seq,strsplit,split="")
+names(HsHitsDNA)<-paste(1:nrow(HsHitsDF),HsHitsDF$ID,sep="_")
+
+HsHitSeqs<-read.GenBank(HsBLAST$Hit_accession[1:3])
+attr(HsHitSeqs, "species")
+```
+
+## Alignment of Severe acute respiratory syndrome coronavirus 2 with the unknown sequence query.
+
+```{r sequence_alignment}
+HsHitsDNA<-as.DNAbin(HsHitsDNA)
+HsAlign<-ape::muscle(HsHitsDNA,quiet=F)
+
+checkAlignment(HsAlign, what=1)
+```
+Figure 1. Alignment of the unknown sequnce with the sequence documented for Severe acute respiratory syndrome (coronavirus 2)
+
+## Phylogenetic Map from Sequence Alignment
+
+```{r tree, Figure 2. Phylogenetic mapping of Severe acute respiratory syndrome (coronavirus 2) within the coronavirus family}
+HsDM<-dist.dna(HsAlign, model="K80")
+class(HsDM)
+
+HsTree<-nj(HsDM)
+str(HsTree)
+class(HsTree)
+ggtree(HsTree, branch.length = "none", layout = "circular")+ 
+  geom_tiplab(angle=15)
+```
